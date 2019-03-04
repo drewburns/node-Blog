@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+
+<h1>New Post:</h1>
+<% if (typeof errors !== 'undefined' && errors && errors.length != 0 ) { %>
+	<ul>
+		Errors: <br>
+		<% errors.forEach((error) => {%>
+			<li><%= error %></li>
+		<%}); %>
+	</ul>
+<%	} %>
+<form action="/posts/new" method="post">
+	Title: <br><input type="text" name="title"> <br><br>
+	Body: <br><textarea name="body" rows="10" cols="30" placeholder="Enter Text Here"></textarea>
+	<br><input type="submit" value="Submit">
+
+</form>

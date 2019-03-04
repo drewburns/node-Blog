@@ -1,0 +1,12 @@
+<% include ../partials/header %>
+
+<h1>Register</h1>
+
+<form action="/users/register" method="post">
+	Email: <br><input type="text" name="email"> <br><br>
+	Name: <br><input type="text" name="name"> <br><br>
+	Passowrd:<br><input type="password" name="password"> <br><br>
+	<br><input type="submit" value="Submit">
+</form>
+
+<a href="/users/login">Have an account? Log in</a>

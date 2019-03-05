@@ -9,32 +9,66 @@ var Post = mongoose.model("Post");
 //middle
 
 
-// const Auth = require('../middleware/auth');
-const loggedInOnly = (req,res,next) => {
-	if (req.isAuthenticated()) next();
-	else res.redirect('/');
-};
-
-
-const loggedOutOnly = (req, res, next) => {
-  if (req.isUnauthenticated()) next();
-  else res.redirect("/");
-};
-
+const Auth = require('../middleware/auth');
 
 
 // routes
 
+
+// destroy 
+posts.post('/destroy/:id', Auth.loggedInOnly, (req,res) => {
+	Post.findById(req.params.id, (err,doc) => {
+		if (err) {res.redirect("/")};
+		if (req.user._id.toString() != doc.author.toString()) {res.redirect("/")};
+		// update
+		console.log("Delete----------")
+		Post.find({_id: doc._id}).remove((err, data) => {
+			if (err) {res.json(err)};
+			res.redirect("/");
+		});
+	});
+});
+
+// edit 
+posts.get('/edit/:id', Auth.loggedInOnly,  (req,res) => {
+	Post.findById(req.params.id, (err,doc) => {
+		if (err) {res.redirect("/")};
+		if (req.user._id.toString() != doc.author.toString()) {res.redirect("/")};
+		res.render("posts/edit", {
+			post: doc
+		})
+	});
+});
+
+// update
+posts.post("/update", Auth.loggedInOnly, (req,res) => {
+		const {postId, title, body} = req.body;
+		Post.findById(postId, (err,doc) => {
+			if (err) {res.redirect("/")};
+			if (req.user._id.toString() != doc.author.toString()) {res.redirect("/")};
+			// update
+			console.log("Update----------")
+			Post.findOneAndUpdate({_id: doc._id}, {title: title, body: body}, (err, post) => {
+				if (err) {res.json(err)};
+				res.redirect(`show/${post._id}`);
+			});
+		});
+});
+
+
+// index post
 posts.get("/" , (req, res) => {
-	Post.find({}, null, {sort: '-created'},(err, posts) => {
+	Post.find({}, null, {sort: '-created'}).populate("author").exec((err, posts) => {
 		res.render("posts/index", {
 			posts: posts
 		})
 	});
 });
 
+
+// show post
 posts.get('/show/:id', (req,res) =>{
-	Post.findById(req.params.id, (err,doc) => {
+	Post.findById(req.params.id).populate("author").exec( (err,doc) => {
 		// if (err) throw err;
 		res.render("posts/show",{
 			post: doc
@@ -42,18 +76,24 @@ posts.get('/show/:id', (req,res) =>{
 	});
 });
 
-posts.get("/new", loggedInOnly, (req,res) => {
+
+// new post
+posts.get("/new", Auth.loggedInOnly, (req,res) => {
 	res.render("posts/new");
 });
 
-posts.post("/new", loggedInOnly, (req,res)=> {
+// create post
+posts.post("/new", Auth.loggedInOnly, (req,res)=> {
 	var newPost = new Post({
 		title: req.body.title,
 		body: req.body.body,
-		created: Date.now()
+		created: Date.now(),
+		author: req.user
 	});
 	newPost.save()
 		.then((post) => {
+			req.user.posts.push(post);
+			req.user.save();
 			res.redirect("show/" + post._id);
 		})
 		.catch((err) => {

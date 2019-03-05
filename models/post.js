@@ -10,6 +10,8 @@ const Post = new mongoose.Schema({
 // middleware
 
 
+
+
 mongoose.model('Post', Post);
 
 module.exports = Post;

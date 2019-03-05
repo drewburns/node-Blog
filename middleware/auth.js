@@ -14,6 +14,12 @@ module.exports =  {
 	  if (req.isUnauthenticated()) next();
 	  else res.redirect("/");
 	}
+
+	// correctUser : (userId,req,res,next) => {
+	// 	// if not correct user redirect
+	// 	if (req.isAuthenticated() && userId === req.user._id) next();
+	// 	else res.redirect("/");
+	// }
 }
 
 // module.exports = {

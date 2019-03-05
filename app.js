@@ -42,17 +42,32 @@ app.use(express.json());
 app.use(express.urlencoded({extened: false}));
 app.use(express.static(__dirname + '/public'));
 app.use(cookieParser());
-app.use(require('express-session')({
-	secret: "Marko is cool",
-	resave: false,
-	saveUninitialized: false
-}));
+// app.use(require('express-session')({
+// 	secret: "Marko is cool",
+// 	resave: true,
+// 	saveUninitialized: false,
+// 	cookie: { maxAge: 60000 ,secure: false },
+//     rolling: true
+ 
+// }));
+var cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'session',
+  keys: ["marko is cool"],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-
+app.use((req,res,next) => {
+	res.locals.currentUser = req.user;
+  	next();
+})
 // passport
 passport.serializeUser((user, done) => {
 	console.log("serializeUser");

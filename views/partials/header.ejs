@@ -9,6 +9,7 @@
 </style>
 
 
+
 <nav class="navbar navbar-default" role="navigation">
 <div class="container-fluid">
 
@@ -22,9 +23,16 @@
             <li><a href="/">Home</a></li>
             <li><a href="/posts">View Posts</a></li>
             <li><a href="/posts/new">New Post</a></li>
+
+            <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+                <li><a href=<%= `/users/show/${currentUser._id}`%>><%= currentUser.name %></a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            <% }else{ %>
+                <li><a href="/users/login">Login</a></li>
+                <li><a href="/users/register">Register</a></li>
+            <% } %>
         </ul>
     </div>
-
 
 
 </div>

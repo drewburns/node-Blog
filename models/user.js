@@ -17,8 +17,11 @@ var UserSchema = new mongoose.Schema({
 });
 
 
+
+
 UserSchema.methods.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.passwordHash);
+	console.log(this);
+  	return bcrypt.compareSync(password, this.passwordHash);
 };
 
 // UserSchema.methods.validPassword = (password,user) => {

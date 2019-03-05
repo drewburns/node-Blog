@@ -5,7 +5,9 @@
 <ul>
 <% posts.forEach((post) => { %>
 	<li>
-		<a href=<%= `posts/show/${post._id}`%>><h3><%= post.title %></h3><i>posted: <%= post.created %></i></a>
+		<a href=<%= `posts/show/${post._id}`%>><h3><%= post.title %></h3>
+		<a href=<%= `users/show/${post.author._id}` %>> Posted by: <%= post.author.name %></a><br>
+		<i>posted: <%= post.created %></i></a>
 		
 	</li>
 <% })%>

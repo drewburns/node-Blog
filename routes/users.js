@@ -11,15 +11,23 @@ const Auth = require("../middleware/auth");
 
 
 function authenticate(passport) {
-	router.use(bodyParser.urlencoded({
-    	extended: true
-	}));
-	router.use(bodyParser.json());
+	// router.use(bodyParser.urlencoded({
+ //    	extended: true
+	// }));
+	// router.use(bodyParser.json());
 	router.get('/show/:id', (req,res) => {
-		User.findById(req.body.id, (err,doc) => {
+		User.findById(req.params.id).populate({path: 'posts', options: { sort: { 'created': -1 } } }).exec( (err,doc) => {
 		// check if user exists
-		// console.log(doc);
-			res.json(doc);
+		if (err) {
+			// handle error
+			res.json(err)
+		} else {
+			console.log(doc);
+			res.render("users/show", {
+				user: doc
+			});
+		}
+			// render()
 		});
 	});
 

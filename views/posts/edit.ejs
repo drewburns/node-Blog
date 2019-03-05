@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+
+<h1>Edit Post:</h1>
+<% if (typeof errors !== 'undefined' && errors && errors.length != 0 ) { %>
+	<ul>
+		Errors: <br>
+		<% errors.forEach((error) => {%>
+			<li><%= error %></li>
+		<%}); %>
+	</ul>
+<%	} %>
+<form action="/posts/update" method="post">
+	<input type="hidden" name="postId" value=<%= post._id %>>
+	Title: <br><input type="text" name="title" value=<%= post.title %>> <br><br>
+	Body: <br><textarea name="body" rows="10" cols="30"><%= post.body %></textarea>
+	<br><input type="submit" value="Submit">
+
+</form>

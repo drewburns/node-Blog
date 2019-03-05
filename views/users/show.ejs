@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+
+<h3><%= user.name %></h3>
+
+<ul>
+	<h4><%= user.name%>'s Posts:</h4>
+<% user.posts.forEach((post) => { %>
+	<li>
+		<a href=<%=`/posts/show/${post._id}` %>><h5><%= post.title %></h5></a>
+		<i>Posted: <%= post.created %></i>
+	</li>
+<% }); %>
+</ul>

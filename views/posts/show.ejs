@@ -1,5 +1,11 @@
 <% include ../partials/header %>
 
 <h3><%= post.title %></h3>
-<i>Created: <%= post.created %></i>
+<% if (post.author._id.toString() == currentUser._id.toString()) { %>
+	<a href=<%= `/posts/edit/${post._id}`%> class='btn btn-warning'>Edit</a><br>
+	<form action=<%= `/posts/destroy/${post._id}`%> method="post"><input type="submit" value="Delete" name="submit" class='btn btn-danger'></form>
+<% } %>
+<u><a href=<%=`/users/show/${post.author._id}`%>>Posted by: <%= post.author.name %></a></u> <br>
+<i>Created: <%= post.created %></i> <br><br>
 <p><%= post.body %></p>
+

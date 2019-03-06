@@ -30,7 +30,7 @@ const logger = (req,res,next) => {
 };
 
 
-var mongoString =  (process.env.NODE_ENV == "production") ? "mongodb+srv://heroku:heroku@cluster0-dlhm4.mongodb.net/test?retryWrites=true" : 'mongodb://localhost/blog'
+var mongoString =  (process.env.NODE_ENV == "production") ? "process.env.MONGODB_URI" : 'mongodb://localhost/blog'
 mongoose.connect(mongoString, { useNewUrlParser: true }, (err) => {
 	if (err) throw err;
 	console.log("Database connected: " + mongoString);

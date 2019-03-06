@@ -5,7 +5,7 @@ require("./models/Tag");
 
 var express = require("express");
 var app = express();
-var port = 3000;
+var port = process.env.PORT || 3000;
 var path = require("path");
 const routes = require('./routes/index')
 const posts = require("./routes/posts")
@@ -28,9 +28,12 @@ const logger = (req,res,next) => {
 	console.log(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
 	next();
 };
-mongoose.connect('mongodb://localhost/blog', { useNewUrlParser: true }, (err) => {
+
+
+var mongoString =  (process.env.NODE_ENV == "production") ? "mongodb+srv://heroku:heroku@cluster0-dlhm4.mongodb.net/test?retryWrites=true" : 'mongodb://localhost/blog'
+mongoose.connect(mongoString, { useNewUrlParser: true }, (err) => {
 	if (err) throw err;
-	console.log("Database connected!");
+	console.log("Database connected: " + mongoString);
 });
 
 

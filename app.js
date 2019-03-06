@@ -1,4 +1,4 @@
-var User = require("./models/User");
+var User = require("./models/user");
 require("./models/Post");
 require("./models/Tag");
 

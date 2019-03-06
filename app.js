@@ -1,3 +1,8 @@
+var User = require("./models/User");
+require("./models/Post");
+require("./models/Tag");
+
+
 var express = require("express");
 var app = express();
 var port = 3000;
@@ -11,10 +16,8 @@ const bcrypt = require("bcrypt");
 var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
 
+var tags = require("./routes/tags");
 
-
-var User = require("./models/User");
-require("./models/Post");
 
 
 // var bodyParser = require("bodyParser");
@@ -102,6 +105,7 @@ passport.use("local", local);
 
 app.use('/', routes);
 app.use('/posts', posts);
+app.use('/tags', tags);
 
 var users = require("./routes/users")(passport);
 app.use('/users', users);

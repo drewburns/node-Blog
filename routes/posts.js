@@ -68,7 +68,7 @@ posts.get("/" , (req, res) => {
 
 // show post
 posts.get('/show/:id', (req,res) =>{
-	Post.findById(req.params.id).populate("author").exec( (err,doc) => {
+	Post.findById(req.params.id).populate("author").populate("tags").exec( (err,doc) => {
 		// if (err) throw err;
 		res.render("posts/show",{
 			post: doc

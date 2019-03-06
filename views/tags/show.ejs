@@ -1,0 +1,14 @@
+<% include ../partials/header %>
+
+<h2>Posts for tag <%= tag.name %>:</h2>
+
+<ul>
+<% tag.posts.forEach((post) => { %>
+	<li>
+		<a href=<%= `/posts/show/${post._id}`%>><h3><%= post.title %></h3>
+		<a href=<%= `/users/show/${post.author._id}` %>> Posted by: <%= post.author.name %></a><br>
+		<i>posted: <%= post.created %></i></a>
+		
+	</li>
+<% })%>
+</ul>

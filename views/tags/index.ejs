@@ -1,0 +1,10 @@
+<% include ../partials/header %>
+
+<h1>Tags</h1>
+<ul>
+<% tags.forEach( (tag) => { %>
+	<li style='height:50px;'>
+		<a href=<%= `/tags/show/${tag._id}`%> style='font-size:20px;'><%= tag.name %></a>
+	</li>
+<% });%>
+</ul>

@@ -1,6 +1,6 @@
 var User = require("./models/user");
-require("./models/Post");
-require("./models/Tag");
+require("./models/post");
+require("./models/tag");
 
 
 var express = require("express");

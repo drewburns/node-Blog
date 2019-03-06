@@ -2,8 +2,8 @@ var express = require("express");
 var tags = express.Router();
 const mongoose = require('mongoose');
 // require("../models/User");
-require("../models/Post");
-require("../models/Tag");
+require("../models/post");
+require("../models/tag");
 var Tag = mongoose.model("Tag");
 var Post = mongoose.model("Post");
 

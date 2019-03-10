@@ -69,7 +69,7 @@ function authenticate(passport) {
 			.then(user => {
 				req.login(user, err => {
 					if (err) next(err);
-					else res.send("Created!")
+					else res.redirect(`/users/show/${user._id}`);
 				});
 			})
 			.catch(err => {
